@@ -7,7 +7,7 @@ import me.luis.xbraintest.model.Venda;
 
 public interface VendaService {
 
-	public void criarVenda(Venda venda);
+	public Venda createVenda(Venda venda);
 	public List<Venda> getVendedoresVendas(LocalDate inicio, LocalDate fim);
 
 }

@@ -26,16 +26,20 @@ public class VendaController {
 	private @Autowired VendedorService vendedorService;
 
 	@PostMapping("/venda")
-	public ResponseEntity<Venda> criarVenda(@RequestBody Venda v) {
-		service.criarVenda(v);
-		return new ResponseEntity<>(v, HttpStatus.CREATED);
+	public ResponseEntity<?> criarVenda(@RequestBody Venda venda) {
+		Venda v = service.createVenda(venda);
+		if (v != null)
+			return new ResponseEntity<Object>(v.getId(), HttpStatus.CREATED);
+		return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 	}
 
 	@GetMapping("/venda/{inicio}/{fim}")
 	public ResponseEntity<List<RetornoVendas>> getVendas(@PathVariable @DateTimeFormat(iso = ISO.DATE) LocalDate inicio,
 			@PathVariable @DateTimeFormat(iso = ISO.DATE) LocalDate fim) {
-
-		return new ResponseEntity<>(vendedorService.getVendas(inicio, fim), HttpStatus.OK);
+		List<RetornoVendas> rv = vendedorService.getVendas(inicio, fim);
+		if (rv != null)
+			return new ResponseEntity<>(vendedorService.getVendas(inicio, fim), HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

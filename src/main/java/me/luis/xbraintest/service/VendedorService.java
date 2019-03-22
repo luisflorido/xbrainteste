@@ -9,6 +9,8 @@ import me.luis.xbraintest.model.Vendedor;
 
 public interface VendedorService {
 
+	public Vendedor createVendedor(String nome);
+	
 	public Vendedor getVendedor(Long id);
 	
 	public List<Vendedor> getVendedores();

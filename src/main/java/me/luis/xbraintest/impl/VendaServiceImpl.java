@@ -20,8 +20,15 @@ public class VendaServiceImpl implements VendaService {
 	private VendaRepository repository;
 
 	@Override
-	public void criarVenda(Venda venda) {
-		repository.save(venda);
+	public Venda createVenda(Venda venda) {
+		Venda v = null;
+
+		try {
+			v = repository.save(venda);
+		} catch (Exception e) {
+			return null;
+		}
+		return v;
 	}
 
 	@Override

@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,27 @@ public class VendedorServiceImpl implements VendedorService {
 	private @Autowired VendaRepository vendaRepository;
 
 	@Override
+	public Vendedor createVendedor(String nome) {
+		Vendedor v = new Vendedor(nome);
+		try {
+			repository.save(v);
+		}catch(Exception e) {
+			return null;
+		}
+		return v;
+	}
+
+	@Override
 	public Vendedor getVendedor(Long id) {
-		return repository.getOne(id);
+		Vendedor v = null;
+		try {
+			v = repository.getOne(id);
+			//Por algum motivo o erro só é tratado ao tentar alguma interação com o objeto retornado, portanto, forcei-o usando o toString.
+			v.toString();
+		}catch(EntityNotFoundException e) {
+			return null;
+		}
+		return v;
 	}
 
 	@Override

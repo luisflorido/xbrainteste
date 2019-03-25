@@ -25,7 +25,7 @@ public class VendedorController {
 		Vendedor v = service.getVendedor((long) id);
 		if (v != null)
 			return new ResponseEntity<Vendedor>(v, HttpStatus.OK);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
 	@PostMapping("/vendedor")

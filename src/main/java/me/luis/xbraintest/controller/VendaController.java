@@ -39,7 +39,7 @@ public class VendaController {
 		List<RetornoVendas> rv = vendedorService.getVendas(inicio, fim);
 		if (rv != null)
 			return new ResponseEntity<>(vendedorService.getVendas(inicio, fim), HttpStatus.OK);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
 }

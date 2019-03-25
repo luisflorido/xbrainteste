@@ -31,7 +31,8 @@ public class VendedorServiceImpl implements VendedorService {
 		Vendedor v = new Vendedor(nome);
 		try {
 			repository.save(v);
-		}catch(Exception e) {
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 		return v;
@@ -42,12 +43,29 @@ public class VendedorServiceImpl implements VendedorService {
 		Vendedor v = null;
 		try {
 			v = repository.getOne(id);
-			//Por algum motivo o erro só é tratado ao tentar alguma interação com o objeto retornado, portanto, forcei-o usando o toString.
+			// Por algum motivo o erro só é tratado ao tentar alguma interação com o objeto
+			// retornado, portanto, forcei-o usando o toString.
 			v.toString();
-		}catch(EntityNotFoundException e) {
+		} catch (EntityNotFoundException e) {
 			return null;
 		}
 		return v;
+	}
+
+	@Override
+	public Vendedor getVendedor(String nome) {
+		Vendedor[] v = { null };
+		try {
+			repository.findAll().forEach((ven) -> {
+				if (ven.getNome().equalsIgnoreCase(nome))
+					v[0] = ven;
+			});
+			;
+			v.toString();
+		} catch (EntityNotFoundException e) {
+			return null;
+		}
+		return v[0];
 	}
 
 	@Override

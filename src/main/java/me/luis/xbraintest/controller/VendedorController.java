@@ -31,10 +31,15 @@ public class VendedorController {
 	@PostMapping("/vendedor")
 	public ResponseEntity<?> createVendedor(@RequestBody Map<String, ?> obj) {
 		String nome = (String) obj.get("nome");
-		Vendedor v = service.createVendedor(nome);
-		if (v != null)
-			return new ResponseEntity<Object>(v.getId(), HttpStatus.CREATED);
-		else
-			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		Vendedor check = service.getVendedor(nome);
+		if (check == null) {
+			Vendedor v = service.createVendedor(nome);
+			if (v != null)
+				return new ResponseEntity<Object>(v.getId(), HttpStatus.CREATED);
+			else
+				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}else {
+			return new ResponseEntity<Object>(HttpStatus.CONFLICT);
+		}
 	}
 }

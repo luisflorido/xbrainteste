@@ -21,11 +21,11 @@ import lombok.ToString;
 @Entity
 @ToString(exclude = { "listaVendas" })
 @Table(name = "vendedor")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "listaVendas"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "listaVendas" })
 public class Vendedor {
 
 	private @Getter @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id_vendedor") Long id;
-	private @Getter @Setter @Column(name = "nome") @NotNull String nome;
+	private @Getter @Setter @Column(name = "nome", unique = true) @NotNull String nome;
 	private @JsonManagedReference @Getter @OneToMany(mappedBy = "vendedor") List<Venda> listaVendas;
 
 	public Vendedor(String nome) {
